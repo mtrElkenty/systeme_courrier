@@ -69,7 +69,7 @@ class CourrierModel extends Model
             $query .= "ORDER BY courriers.id DESC LIMIT ?";
             $id = 1;
         }
-        else "WHERE courriers.id = ? LIMIT 1";
+        else $query .= "WHERE courriers.id = ? LIMIT 1";
         
 
         $statement = $this -> connection -> prepare($query);

@@ -95,8 +95,10 @@ const displayEmployeeDetailModal = async(id) => {
     if (res.ok) {
         const html = renderEmployeeDetails(res.employees)
         document.getElementById('employee-details-div').innerHTML = html
+        document.getElementById('employee-details').style.display = 'flex'
+    } else {
+        setErrorAlert(res.error)
     }
-    document.getElementById('employee-details').style.display = 'flex'
 }
 
 const displayEditEmployeeModal = async(id) => {
@@ -109,9 +111,11 @@ const displayEditEmployeeModal = async(id) => {
         for (var i = 0; i < form.length - 1; i++) {
             form[i].value = res.employees[form[i].name]
         }
+        document.getElementById('edit-employee').style.display = 'flex'
+    } else {
+        setErrorAlert(res.error)
     }
 
-    document.getElementById('edit-employee').style.display = 'flex'
 }
 
 const displayEmployeeConfirmBox = async(id) => {
@@ -131,12 +135,10 @@ const getEmployeesBy = async() => {
     const method = 'GET'
     const res = await request(url, method)
 
-    if (res.ok)
-        document.getElementById('employees-list').innerHTML = renderEmployees(res.employees)
-    else {
-        document.getElementById('error-container').style.display = 'block'
-        setAlertMessage('error-title', 'Error')
-        setAlertMessage('error-message', res.error)
+    if (res.ok) {
+        setSuccessAlert(res.message)
+    } else {
+        setErrorAlert(res.error)
     }
 }
 
@@ -162,10 +164,9 @@ const submitAddEmployee = async(event) => {
             document.getElementById('employees-list').innerHTML = html
             form.reset();
         }
+        setSuccessAlert(res.message)
     } else {
-        document.getElementById('error-container').style.display = 'block'
-        setAlertMessage('error-title', 'Error')
-        setAlertMessage('error-message', res.error)
+        setErrorAlert(res.error)
     }
 }
 
@@ -188,10 +189,9 @@ const submitEditEmployee = async(event) => {
             form.reset();
             closeModal('edit-employee')
         }
+        setSuccessAlert(res.message)
     } else {
-        document.getElementById('error-container').style.display = 'block'
-        setAlertMessage('error-title', 'Error')
-        setAlertMessage('error-message', res.error)
+        setErrorAlert(res.error)
     }
 }
 

@@ -1,5 +1,5 @@
 const createAndPrintTable = async(courrier) => {
-
+    console.log(courrier)
     const html = `<!DOCTYPE html>
         <html lang="en">
 

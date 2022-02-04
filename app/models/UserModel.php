@@ -145,7 +145,7 @@ class UserModel extends Model
             echo json_encode($res);
             exit();
         } else {
-            $res = array('ok' => false, 'error' => 'Aucun users avec cet nom.');
+            $res = array('ok' => false, 'error' => 'Aucun users avec cet id.');
 
             header('Content-Type: application/json');
             echo json_encode($res);

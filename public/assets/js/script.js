@@ -24,7 +24,8 @@ const deleteItem = async(table) => {
         if (data.ok) {
             const html = renderEmployees(data.employees)
             document.getElementById('employees-list').innerHTML = html
-            closeModal('delete-'.table)
+            closeModal('delete-' + table)
+            initAdminIndex()
         }
     }
 }
@@ -32,6 +33,47 @@ const deleteItem = async(table) => {
 const setAlertMessage = (id, message) => {
     const element = document.getElementById(id)
     element.innerText = message
+}
+
+const closeAlert = async() => {
+    const alerts = document.getElementById('alerts')
+
+    for (let i = 0; i >= -350; i -= 2) {
+        alerts.style.right = `${i}px`
+        await sleep(1)
+    }
+    alerts.style.display = 'none'
+    document.getElementById('success-alert').style.display = 'none'
+}
+
+const setSuccessAlert = async(message) => {
+    setAlertMessage('success-text', message)
+    const alerts = document.getElementById('alerts')
+
+    alerts.style.display = 'block'
+    document.getElementById('success-alert').style.display = 'block'
+    for (let i = -350; i <= 0; i += 2) {
+        alerts.style.right = `${i}px`
+        await sleep(1)
+    }
+
+    await sleep(10000)
+    closeAlert()
+}
+
+setErrorAlert = async(error) => {
+    setAlertMessage('error-text', error)
+    const alerts = document.getElementById('alerts')
+
+    alerts.style.display = 'block'
+    document.getElementById('error-alert').style.display = 'block'
+    for (let i = -350; i <= 0; i += 2) {
+        alerts.style.right = `${i}px`
+        await sleep(1)
+    }
+
+    await sleep(10000)
+    closeAlert()
 }
 
 const submitLoginForm = async() => {

@@ -9,9 +9,6 @@ class Admin extends Controller
 
 	function __construct()
 	{
-		$this -> courrier = $this -> model('CourrierModel');
-		$this -> employee = $this -> model('EmployeeModel');
-		$this -> user = $this -> model('UserModel');
 		$this -> role = $this -> model('RoleModel');
 	}
 
@@ -21,5 +18,11 @@ class Admin extends Controller
 		
 		// Returning The Admin View:
 		$this -> view('admin', ['title' => 'Admin']);
+	}
+
+	public function getAllRoles()
+	{
+		// Get All Roles
+		$this -> role -> getAll();
 	}
 }

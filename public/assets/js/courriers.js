@@ -126,12 +126,13 @@ const displayCourrierDetailModal = async(id) => {
     const url = 'courrier/getCourriersBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
-
     if (res.ok) {
         const html = renderCourrierDetails(res.courriers)
         document.getElementById('courrier-details-div').innerHTML = html
+        document.getElementById('courrier-details').style.display = 'flex'
+    } else {
+        setErrorAlert(res.error)
     }
-    document.getElementById('courrier-details').style.display = 'flex'
 }
 
 const displayEditCourrierModal = async(id) => {
@@ -144,17 +145,22 @@ const displayEditCourrierModal = async(id) => {
         for (var i = 0; i < form.length - 1; i++) {
             form[i].value = res.courriers[form[i].name]
         }
+        document.getElementById('edit-courrier').style.display = 'flex'
+    } else {
+        setErrorAlert(res.error)
     }
 
-    document.getElementById('edit-courrier').style.display = 'flex'
 }
 
 const courrierPrint = async(id = "") => {
     const url = 'courrier/getCourriersBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
+    console.log(res)
     if (res.ok) {
         createAndPrintTable(res.courriers)
+    } else {
+        setErrorAlert(res.error)
     }
 }
 
@@ -169,9 +175,7 @@ const getCourriersBy = async() => {
     if (res.ok)
         document.getElementById('courriers-list').innerHTML = renderCourriers(res.courriers)
     else {
-        document.getElementById('error-container').style.display = 'block'
-        setAlertMessage('error-title', 'Error')
-        setAlertMessage('error-message', res.error)
+        setErrorAlert(res.error)
     }
 }
 
@@ -198,10 +202,9 @@ const submitAddCourrier = async(event) => {
             form.reset();
             courrierPrint()
         }
+        setSuccessAlert(res.message)
     } else {
-        document.getElementById('error-container').style.display = 'block'
-        setAlertMessage('error-title', 'Error')
-        setAlertMessage('error-message', res.error)
+        setErrorAlert(res.error)
     }
 }
 
@@ -224,10 +227,9 @@ const submitEditCourrier = async(event) => {
             form.reset();
             closeModal('edit-courrier')
         }
+        setSuccessAlert(res.message)
     } else {
-        document.getElementById('error-container').style.display = 'block'
-        setAlertMessage('error-title', 'Error')
-        setAlertMessage('error-message', res.error)
+        setErrorAlert(res.error)
     }
 }
 

@@ -242,6 +242,8 @@ div#alerts {
     position: absolute;
     width: 350px;
     right: -350px;
+    z-index: 9999;
+    top: 15px
 }
 
 #wrapper {

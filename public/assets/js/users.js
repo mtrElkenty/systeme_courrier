@@ -119,8 +119,10 @@ const displayUserDetailModal = async(id) => {
     if (res.ok) {
         const html = renderUserDetails(res.users)
         document.getElementById('user-details-div').innerHTML = html
+        document.getElementById('user-details').style.display = 'flex'
+    } else {
+        setErrorAlert(res.error)
     }
-    document.getElementById('user-details').style.display = 'flex'
 }
 
 const displayEditUserModal = async(id) => {
@@ -139,9 +141,12 @@ const displayEditUserModal = async(id) => {
         for (var i = 0; i < form.length - 1; i++) {
             form[i].value = res.users[form[i].name]
         }
+        document.getElementById('edit-user').style.display = 'flex'
+        setSuccessAlert(res.message)
+    } else {
+        setErrorAlert(res.error)
     }
 
-    document.getElementById('edit-user').style.display = 'flex'
 }
 
 const showChangePasswordForm = (id) => {
@@ -166,12 +171,10 @@ const getUsersBy = async() => {
     const method = 'GET'
     const res = await request(url, method)
 
-    if (res.ok)
+    if (res.ok) {
         document.getElementById('users-list').innerHTML = renderUsers(res.users)
-    else {
-        document.getElementById('error-container').style.display = 'block'
-        setAlertMessage('error-title', 'Error')
-        setAlertMessage('error-message', res.error)
+    } else {
+        setErrorAlert(res.error)
     }
 }
 
@@ -193,10 +196,9 @@ const submitAddUser = async(event) => {
             document.getElementById('users-list').innerHTML = html
             form.reset()
         }
+        setSuccessAlert(res.message)
     } else {
-        document.getElementById('error-container').style.display = 'block'
-        setAlertMessage('error-title', 'Error')
-        setAlertMessage('error-message', res.error)
+        setErrorAlert(res.message)
     }
 }
 
@@ -220,9 +222,7 @@ const submitEditUser = async(event) => {
             closeModal('edit-user')
         }
     } else {
-        document.getElementById('error-container').style.display = 'block'
-        setAlertMessage('error-title', 'Error')
-        setAlertMessage('error-message', res.error)
+        setErrorAlert(res.error)
     }
 }
 
@@ -238,12 +238,11 @@ const submitChangePassword = async(event) => {
     const res = await request(url, method, formData)
 
     if (res.ok) {
-        console.log(res)
+        setAlertMessage('success-text', res.message)
+        const alerts = document.getElementById('alerts')
+        setSuccessAlert(res.message)
     } else {
-        console.log(res)
-            // document.getElementById('error-container').style.display = 'block'
-            // setAlertMessage('error-title', 'Error')
-            // setAlertMessage('error-message', res.error)
+        setErrorAlert(res.error)
     }
 
 }
