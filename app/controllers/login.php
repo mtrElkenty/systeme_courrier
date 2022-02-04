@@ -4,7 +4,7 @@ class Login extends Controller {
     private $user;
     function __construct() {
         // Inititialise Necessary Models
-        $this -> user = $this -> model('User');
+        $this -> user = $this -> model('UserModel');
     }
 
     public function index($param = '') {

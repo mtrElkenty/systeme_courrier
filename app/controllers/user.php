@@ -3,13 +3,13 @@
 /**
  * User Controller Class
  */
-class User extends Controller
+class user extends Controller
 {
 	private $user;
 
 	function __construct()
 	{
-		$this -> user = $this -> model('User');
+		$this -> user = $this -> model('UserModel');
 	}
 
 	public function index($param = "")
@@ -19,6 +19,7 @@ class User extends Controller
 		// Returning The User View:
 		$this -> view('admin', ['title' => 'Users']);
 	}
+
 
 	// User Controllers
 	public function users()
@@ -32,7 +33,7 @@ class User extends Controller
 
 	public function getAllUsers()
 	{
-		// Getting All THe Users
+		// Getting All Users
 		$this -> user -> getAll();
 	}
 
@@ -48,16 +49,13 @@ class User extends Controller
 				$this -> user -> getById($keyword);
 				break;
 			case 'full_name':
-				$this -> user -> getByFullNameLike($keyword);
+				$this -> user -> getByEmployeeFullNameLike($keyword);
 				break;
-			case 'phone':
-				$this -> user -> getByPhoneLike($keyword);
+			case 'username':
+				$this -> user -> getByUsernameLike($keyword);
 				break;
-			case 'email':
-				$this -> user -> getByEmailLike($keyword);
-				break;
-			case 'job_title':
-				$this -> user -> getByJobTitleLike($keyword);
+			case 'role':
+				$this -> user -> getByRole($keyword);
 				break;
 			
 			default:
@@ -70,7 +68,7 @@ class User extends Controller
 		}
 	}
 
-	public function addUtilisateur()
+	public function addUser()
 	{
         // 1. Validating Data:
         if (!isset($_POST['employee_id']) || !isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['role_id'])) {
@@ -105,15 +103,17 @@ class User extends Controller
 	public function editUser()
 	{
         // 1. Validating Data:
-        if (!isset($_POST['id']) || !isset($_POST['full_name']) || !isset($_POST['phone']) || !isset($_POST['email']) || !isset($_POST['job_title'])) {
-            $res = array('ok' => false, 'error' => 'Tous Les Champs Sont Obliguatoires.');
+        if (!isset($_POST['id']) || !isset($_POST['employee_id']) || !isset($_POST['username']) || !isset($_POST['role_id'])) {
+            $res = array('ok' => false, 'error' => 'Tous Les Champs Sont Obliguatoires.
+			<br />
+			Laissez Les Champs que vous ne desirez chancher comme ils sont.');
 
             header('Content-Type: application/json');
             echo json_encode($res);
             exit();
         }
 
-        if (empty($_POST['id']) || empty($_POST['full_name']) || empty($_POST['phone']) || empty($_POST['job_title'])){
+        if (empty($_POST['id']) || empty($_POST['employee_id']) || empty($_POST['username']) || empty($_POST['role_id'])){
             $res = array('ok' => false, 'error' => 'Tous Les Champs Sont Obliguatoires.');
 
             header('Content-Type: application/json');
@@ -123,13 +123,39 @@ class User extends Controller
 
         // 2. Getting Data:
         $id = $_POST['id'];
-        $full_name = $_POST['full_name'];
-        $phone = $_POST['phone'];
-        $email = $_POST['email'];
-        $job_title = $_POST['job_title'];
+        $employee_id = $_POST['employee_id'];
+        $username = $_POST['username'];
+        $role_id = $_POST['role_id'];
 
         // 3. Updating User:
-        $this -> user -> update($id, $full_name, $phone, $email, $job_title);
+        $this -> user -> update($id, $employee_id, $username, $role_id);
+	}
+
+	public function changeUserPassword()
+	{
+        // 1. Validating Data:
+        if (!isset($_POST['id']) || !isset($_POST['new-password'])) {
+            $res = array('ok' => false, 'error' => 'Nouveau Password Est Obliguatoires.');
+
+            header('Content-Type: application/json');
+            echo json_encode($res);
+            exit();
+        }
+
+        if (empty($_POST['id']) || empty($_POST['new-password'])){
+            $res = array('ok' => false, 'error' => 'Nouveau Password Est Obliguatoires.');
+
+            header('Content-Type: application/json');
+            echo json_encode($res);
+            exit();
+        }
+
+        // 2. Getting Data:
+        $id = $_POST['id'];
+        $password = $_POST['new-password'];
+
+        // 3. Updating User:
+        $this -> user -> changePassword($id, $password);
 	}
 
 	public function userDelete()

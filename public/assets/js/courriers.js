@@ -73,7 +73,10 @@ const renderCourrierDetails = (courrier) => {
                     <td class="w-2/5">
                         Recu Par
                     </td>
-                    <td class="w-3/5 font-bold text-l">${courrier.full_name}</td>
+                    <td class="w-3/5 font-bold text-l">
+                    <a onclick=displayEmployeeDetailModal(${courrier.received_by_employee_id}) class="cursor-pointer border-b-2 border-blue-600 active:outline-none ">
+                        ${courrier.full_name}
+                    </a>
                 </tr>
                 <tr class="w-full">
                     <td class="py-1">
@@ -116,11 +119,11 @@ const renderCourrierDetails = (courrier) => {
 }
 
 const getAllCourriers = async() => {
-    return await request('admin/getAllCourriers')
+    return await request('courrier/getAllCourriers')
 }
 
 const displayCourrierDetailModal = async(id) => {
-    const url = 'admin/getCourriersBy?by=id&keyword=' + id
+    const url = 'courrier/getCourriersBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
 
@@ -132,7 +135,7 @@ const displayCourrierDetailModal = async(id) => {
 }
 
 const displayEditCourrierModal = async(id) => {
-    const url = 'admin/getCourriersBy?by=id&keyword=' + id
+    const url = 'courrier/getCourriersBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
 
@@ -146,20 +149,20 @@ const displayEditCourrierModal = async(id) => {
     document.getElementById('edit-courrier').style.display = 'flex'
 }
 
-const courrierPrint = async(id) => {
-    const url = 'admin/getCourriersBy?by=id&keyword=' + id
+const courrierPrint = async(id = "") => {
+    const url = 'courrier/getCourriersBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
-        // document.getElementById('courrier-id').value = id
-        // document.getElementById('courrier-name').innerText = res.courriers.full_name
-        // document.getElementById('delete-courrier').style.display = 'flex'
+    if (res.ok) {
+        createAndPrintTable(res.courriers)
+    }
 }
 
 const getCourriersBy = async() => {
     const keyword = document.getElementById('courrier-search-keyword').value
-    const searchBy = document.getElementById('by').value
+    const searchBy = document.getElementById('courrier-by').value
 
-    const url = 'admin/getCourriersBy?keyword=' + keyword + '&by=' + searchBy
+    const url = 'courrier/getCourriersBy?keyword=' + keyword + '&by=' + searchBy
     const method = 'GET'
     const res = await request(url, method)
 
@@ -193,6 +196,7 @@ const submitAddCourrier = async(event) => {
             const html = renderCourriers(data.courriers)
             document.getElementById('courriers-list').innerHTML = html
             form.reset();
+            courrierPrint()
         }
     } else {
         document.getElementById('error-container').style.display = 'block'

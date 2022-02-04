@@ -3,7 +3,7 @@
 /**
  * Role Model Class
  */
-class Role extends Model
+class RoleModel extends Model
 {
 	protected $id;
 	protected $role;

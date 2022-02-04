@@ -1,9 +1,9 @@
 <?php require 'admin/templates/header.php'; ?>
 
-<?php require 'admin/modals/courrier/addCourrier.php'; ?>
-<?php require 'admin/modals/courrier/courrierDetails.php'; ?>
-<?php require 'admin/modals/courrier/editCourrier.php'; ?>
-<?php require 'admin/modals/courrier/confirmDelete.php'; ?>
+<?php require 'common/modals/courrier/addCourrier.php'; ?>
+<?php require 'common/modals/courrier/courrierDetails.php'; ?>
+<?php require 'common/modals/courrier/editCourrier.php'; ?>
+<?php require 'common/modals/courrier/confirmDelete.php'; ?>
 
 <?php require 'admin/modals/user/addUser.php'; ?>
 <?php require 'admin/modals/user/userDetails.php'; ?>
@@ -27,9 +27,6 @@
 		</div>
 		<div id="users" class="container flex" x-show="activeTab===2">
 			<?php require 'admin/tabs/users.php'; ?>
-		</div>
-		<div id="roles" class="container flex" x-show="activeTab===3">
-			<?php require 'admin/tabs/roles.php'; ?>
 		</div>
 	</div>
 </div>

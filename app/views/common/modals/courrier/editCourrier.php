@@ -18,9 +18,9 @@
         bg-no-repeat
         bg-center
         bg-cover"
-    id="add-courrier">
+    id="edit-courrier">
     <div
-        onclick="closeModal('add-courrier')"
+        onclick="closeModal('edit-courrier')"
         class="absolute
             bg-black
             opacity-80
@@ -44,10 +44,10 @@
                 lg:rounded-l-none">
             <h3
                 class="text-3xl
-                    text-center">Ajouter Courrier!</h3>
+                    text-center">Modifer Courrier!</h3>
             <form
-                id="add-courrier-form"
-                action="admin/addCourrier"
+                id="edit-courrier-form"
+                action="courrier/editCourrier"
                 method="POST"
                 class="px-6
                     pt-6
@@ -55,6 +55,10 @@
                     mb-4
                     bg-white
                     rounded">
+				<input
+                    id="courrier-id"
+                    type="hidden"
+                    name="id" />
                 <div
                     class="mb-4">
                     <label
@@ -222,10 +226,10 @@
                             focus:outline-none
                             focus:shadow-outline"
                         type="submit">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        Ajouter
+						<svg class="w-6 h-6 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+						</svg>
+                        Modifer
                     </button>
                 </div>
             </form>

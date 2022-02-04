@@ -3,7 +3,7 @@
 	<div class="w-full max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white">
 		<div class="w-full bg-white rounded-lg lg:rounded-l-none">
 			<h3 class="text-3xl text-center">Modifier Employee!</h3>
-			<form id="edit-employee-form" action="admin/editEmployee" method="POST" class="px-6 pt-6 pb-8 mb-4 bg-white rounded">
+			<form id="edit-employee-form" action="employee/editEmployee" method="POST" class="px-6 pt-6 pb-8 mb-4 bg-white rounded">
 				<input id="employee-id" type="hidden" name="id" />
 				<div class="mb-4">
 					<label class="block mb-2 text-sm font-bold text-gray-800 flex align-items-center" for="full_name">

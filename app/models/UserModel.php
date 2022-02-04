@@ -3,7 +3,7 @@
 /**
  * User Model Class
  */
-class User extends Model
+class UserModel extends Model
 {
 	protected $id;
 	protected $employee_id;
@@ -115,7 +115,7 @@ class User extends Model
 
 		// 7. Executing:
 		if($statement -> execute()) {
-			$res = array('ok' => true, 'message' => 'Utilisateur Ajoutee A Succee');
+			$res = array('ok' => true, 'message' => 'User Ajoutee A Succee');
 			header('Content-Type: application/json');
 			echo json_encode($res);
 			exit();
@@ -139,7 +139,7 @@ class User extends Model
         $statement-> execute();
         $result = $statement -> get_result();
         if (mysqli_num_rows($result) > 0) {
-            $res = array('ok' => true, 'utilisateurs' => $result -> fetch_assoc());
+            $res = array('ok' => true, 'users' => $result -> fetch_assoc());
 
             header('Content-Type: application/json');
             echo json_encode($res);
@@ -166,7 +166,7 @@ class User extends Model
         $result = $statement -> get_result();
 
         if (mysqli_num_rows($result) > 0) {
-            $res = array('ok' => true, 'utilisateurs' => $result -> fetch_all());
+            $res = array('ok' => true, 'users' => $result -> fetch_all());
 
             header('Content-Type: application/json');
             echo json_encode($res);
@@ -192,7 +192,7 @@ class User extends Model
         $result = $statement -> get_result();
 
         if (mysqli_num_rows($result) > 0) {
-            $res = array('ok' => true, 'utilisateurs' => $result -> fetch_all());
+            $res = array('ok' => true, 'users' => $result -> fetch_all());
 
             header('Content-Type: application/json');
             echo json_encode($res);
@@ -218,7 +218,7 @@ class User extends Model
         $result = $statement -> get_result();
 
         if (mysqli_num_rows($result) > 0) {
-            $res = array('ok' => true, 'utilisateurs' => $result -> fetch_all());
+            $res = array('ok' => true, 'users' => $result -> fetch_all());
 
             header('Content-Type: application/json');
             echo json_encode($res);
@@ -240,7 +240,7 @@ class User extends Model
         $result = $this -> connection -> query($query);
 
         if ($result) {
-            $res = array('ok' => true, 'utilisateurs' => $result -> fetch_all());
+            $res = array('ok' => true, 'users' => $result -> fetch_all());
 
             header('Content-Type: application/json');
             echo json_encode($res);
@@ -280,7 +280,7 @@ class User extends Model
 
         // 5. Executing:
         if($statement -> execute()) {
-            $res = array('ok' => true, 'message' => 'Utilisateur Modifie Avec Succee');
+            $res = array('ok' => true, 'message' => 'User Modifie Avec Succee');
             header('Content-Type: application/json');
             echo json_encode($res);
             exit();
@@ -334,7 +334,7 @@ class User extends Model
 
         // 3. Executing:
         if($statement -> execute()) {
-            $res = array('ok' => true, 'message' => 'Utilisateur Supprimee Avec Succee');
+            $res = array('ok' => true, 'message' => 'User Supprimee Avec Succee');
             header('Content-Type: application/json');
             echo json_encode($res);
             exit();

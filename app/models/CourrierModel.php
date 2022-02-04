@@ -3,7 +3,7 @@
 /**
  * Courrier Model Class
  */
-class Courrier extends Model
+class CourrierModel extends Model
 {
 	protected $id;
 	protected $numero_inscription;
@@ -61,9 +61,16 @@ class Courrier extends Model
 
 	public function getById($id)
 	{
-		$query = "SELECT courriers.id, numero_inscription, designateur, destination, date_depart, date_arrive, full_name, courriers.created_at, received_by_employee_id FROM courriers
-        JOIN employees ON courriers.received_by_employee_id = employees.id
-        WHERE courriers.id = ? LIMIT 1";
+        // 1. Setting The Query:
+        $query = "SELECT courriers.id, numero_inscription, designateur, destination, date_depart, date_arrive, full_name, courriers.created_at, received_by_employee_id FROM courriers
+        JOIN employees ON courriers.received_by_employee_id = employees.id ";
+        
+        if (empty($id)) {
+            $query .= "ORDER BY courriers.id DESC LIMIT ?";
+            $id = 1;
+        }
+        else "WHERE courriers.id = ? LIMIT 1";
+        
 
         $statement = $this -> connection -> prepare($query);
         $statement -> bind_param('i', $id);
@@ -87,12 +94,14 @@ class Courrier extends Model
 
 	public function getByNumeroInscription($numero_inscription)
 	{
+        $numero_inscription = "%" . htmlspecialchars($numero_inscription) . "%";
+
 		$query = "SELECT courriers.id, numero_inscription, designateur, destination, date_depart, date_arrive, full_name, courriers.created_at, received_by_employee_id FROM courriers
         JOIN employees ON courriers.received_by_employee_id = employees.id
         WHERE courriers.numero_inscription LIKE ? ";
 
         $statement = $this -> connection -> prepare($query);
-        $statement -> bind_param('s', "%" + $numero_inscription + "%");
+        $statement -> bind_param('s', $numero_inscription);
         $statement-> execute();
         $result = $statement -> get_result();
 		
@@ -113,12 +122,14 @@ class Courrier extends Model
 
 	public function getByDesignateur($designateur)
 	{
-		$query = "SELECT courriers.id, numero_inscription, designateur, destination, date_depart, date_arrive, full_name, courriers.created_at, received_by_employee_id FROM courriers
+        $designateur = "%" . htmlspecialchars($designateur) . "%";
+
+        $query = "SELECT courriers.id, numero_inscription, designateur, destination, date_depart, date_arrive, full_name, courriers.created_at, received_by_employee_id FROM courriers
         JOIN employees ON courriers.received_by_employee_id = employees.id
         WHERE courriers.designateur LIKE ?";
 
         $statement = $this -> connection -> prepare($query);
-        $statement -> bind_param('s', "%" + $designateur + "%");
+        $statement -> bind_param('s', $designateur);
         $statement-> execute();
         $result = $statement -> get_result();
 		
@@ -139,12 +150,13 @@ class Courrier extends Model
 
 	public function getByDestination($destination)
 	{
+        $destination = "%" . htmlspecialchars($destination) . "%";
 		$query = "SELECT courriers.id, numero_inscription, designateur, destination, date_depart, date_arrive, full_name, courriers.created_at, received_by_employee_id FROM courriers
         JOIN employees ON courriers.received_by_employee_id = employees.id
         WHERE courriers.destination LIKE ?";
 
         $statement = $this -> connection -> prepare($query);
-        $statement -> bind_param('s', "%" + $destination + "%");
+        $statement -> bind_param('s', $destination);
         $statement-> execute();
         $result = $statement -> get_result();
 		
@@ -165,12 +177,14 @@ class Courrier extends Model
 
 	public function getByDateDepart($date_depart)
 	{
+        $date_depart = "%" . htmlspecialchars($date_depart) . "%";
+
 		$query = "SELECT courriers.id, numero_inscription, designateur, destination, date_depart, date_arrive, full_name, courriers.created_at, received_by_employee_id FROM courriers
         JOIN employees ON courriers.received_by_employee_id = employees.id
         WHERE courriers.date_depart LIKE ?";
 
         $statement = $this -> connection -> prepare($query);
-        $statement -> bind_param('s', "%" + $date_depart + "%");
+        $statement -> bind_param('s', $date_depart);
         $statement-> execute();
         $result = $statement -> get_result();
 		
@@ -191,12 +205,14 @@ class Courrier extends Model
 
 	public function getByDateArrive($date_arrive)
 	{
+        $date_arrive = "%" . htmlspecialchars($date_arrive) . "%";
+
 		$query = "SELECT courriers.id, numero_inscription, designateur, destination, date_depart, date_arrive, full_name, courriers.created_at, received_by_employee_id FROM courriers
         JOIN employees ON courriers.received_by_employee_id = employees.id
         WHERE courriers.date_arrive LIKE ?";
 
         $statement = $this -> connection -> prepare($query);
-        $statement -> bind_param('s', "%" + $date_arrive + "%");
+        $statement -> bind_param('s', $date_arrive);
         $statement-> execute();
         $result = $statement -> get_result();
 		
@@ -217,12 +233,14 @@ class Courrier extends Model
 
 	public function getByEmployeeFullName($full_name)
 	{
+        $full_name = "%" . htmlspecialchars($full_name) . "%";
+        
 		$query = "SELECT courriers.id, numero_inscription, designateur, destination, date_depart, date_arrive, full_name, courriers.created_at, received_by_employee_id FROM courriers
         JOIN employees ON courriers.received_by_employee_id = employees.id
         WHERE employees.full_name LIKE ?";
 
         $statement = $this -> connection -> prepare($query);
-        $statement -> bind_param('s', "%" + $full_name + "%");
+        $statement -> bind_param('s', $full_name);
         $statement-> execute();
         $result = $statement -> get_result();
 		

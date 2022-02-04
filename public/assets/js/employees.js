@@ -84,11 +84,11 @@ const renderEmployeeDetails = (employee) => {
 }
 
 const getAllEmployees = async() => {
-    return await request('admin/getAllEmployees')
+    return await request('employee/getAllEmployees')
 }
 
 const displayEmployeeDetailModal = async(id) => {
-    const url = 'admin/getEmployeesBy?by=id&keyword=' + id
+    const url = 'employee/getEmployeesBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
 
@@ -100,7 +100,7 @@ const displayEmployeeDetailModal = async(id) => {
 }
 
 const displayEditEmployeeModal = async(id) => {
-    const url = 'admin/getEmployeesBy?by=id&keyword=' + id
+    const url = 'employee/getEmployeesBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
 
@@ -115,7 +115,7 @@ const displayEditEmployeeModal = async(id) => {
 }
 
 const displayEmployeeConfirmBox = async(id) => {
-    const url = 'admin/getEmployeesBy?by=id&keyword=' + id
+    const url = 'employee/getEmployeesBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
     document.getElementById('employee-id').value = id
@@ -127,7 +127,7 @@ const getEmployeesBy = async() => {
     const keyword = document.getElementById('search-keyword').value
     const searchBy = document.getElementById('by').value
 
-    const url = 'admin/getEmployeesBy?keyword=' + keyword + '&by=' + searchBy
+    const url = 'employee/getEmployeesBy?keyword=' + keyword + '&by=' + searchBy
     const method = 'GET'
     const res = await request(url, method)
 

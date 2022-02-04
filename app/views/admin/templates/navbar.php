@@ -17,14 +17,12 @@
 			</div>
 			<nav class="hidden md:flex space-x-10">
 				<ul class="flex justify-center items-center my-4">
-						<li class="cursor-pointer py-2 px-4 text-gray-900 border-b-2"
-							:class="activeTab===0 ? 'text-blue-700 border-blue-500' : ''" @click="activeTab = 0">Employees</li>
-						<li class="cursor-pointer py-2 px-4 text-gray-900 border-b-2"
-							:class="activeTab===1 ? 'text-blue-700 border-blue-500' : ''" @click="activeTab = 1">Courrier</li>
-						<li class="cursor-pointer py-2 px-4 text-gray-900 border-b-2"
-							:class="activeTab===2 ? 'text-blue-700 border-blue-500' : ''" @click="activeTab = 2">Users</li>
-						<li class="cursor-pointer py-2 px-4 text-gray-900 border-b-2"
-							:class="activeTab===3 ? 'text-blue-700 border-blue-500' : ''" @click="activeTab = 3">Roles</li>
+					<li class="cursor-pointer py-2 px-4 text-gray-900 border-b-2"
+						:class="activeTab===0 ? 'text-blue-700 border-blue-500' : ''" @click="activeTab = 0">Employees</li>
+					<li class="cursor-pointer py-2 px-4 text-gray-900 border-b-2"
+						:class="activeTab===1 ? 'text-blue-700 border-blue-500' : ''" @click="activeTab = 1">Courrier</li>
+					<li class="cursor-pointer py-2 px-4 text-gray-900 border-b-2"
+						:class="activeTab===2 ? 'text-blue-700 border-blue-500' : ''" @click="activeTab = 2">Users</li>
 				</ul>
 			</nav>
 
@@ -32,7 +30,7 @@
 				<?php
 
 				if (isset($_SESSION['user']) && strpos($_SERVER['REQUEST_URI'], 'login') == false)
-					echo '<a href="#" onclick="logout()" class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+					echo '<a href="#" onclick="logout()" class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-600 hover:bg-white hover:text-red-700">
 							Deconnecter
 						</a>';
 				?>

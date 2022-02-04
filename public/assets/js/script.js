@@ -13,31 +13,9 @@ const request = async(url, method, data = null) => {
     return res
 }
 
-const initAdminIndex = async() => {
-    let data = await getAllEmployees()
-    if (data.ok) {
-        const html = renderEmployees(data.employees)
-        document.getElementById('employees-list').innerHTML = html
-    }
-
-    data = await getAllUtilisateurs()
-    if (data.ok) {
-        const html = renderUtilisateurs(data.utilisateurs)
-        document.getElementById('utilisateurs-list').innerHTML = html
-    }
-
-    data = await getAllCourriers()
-    if (data.ok) {
-        const html = renderCourriers(data.courriers)
-        document.getElementById('courriers-list').innerHTML = html
-    }
-}
-
-sessionStorage.getItem('user') && initAdminIndex()
-
 const deleteItem = async(table) => {
     const id = document.getElementById(table + '-id').value
-    const url = 'admin/' + table + 'Delete?id=' + id
+    const url = table + '/' + table + 'Delete?id=' + id
     const method = 'GET'
     const res = await request(url, method)
 

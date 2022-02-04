@@ -1,29 +1,29 @@
-const renderUtilisateurs = (utilisateurs) => {
+const renderUsers = (users) => {
     let html = ''
-    utilisateurs.map(
+    users.map(
         u => html += `<tr class="whitespace-nowrap cursor-pointer hover:bg-blue-300">
-			<td onclick=displayUtilisateurDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
+			<td onclick=displayUserDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
 				${u[0]}
 			</td>
-			<td onclick=displayUtilisateurDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
+			<td onclick=displayUserDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
 				${u[1]}
 			</td>
-			<td onclick=displayUtilisateurDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
+			<td onclick=displayUserDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
 				${u[2]}
 			</td>
-			<td onclick=displayUtilisateurDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
+			<td onclick=displayUserDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
 				${u[3]}
 			</td>
-			<td onclick=displayUtilisateurDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
+			<td onclick=displayUserDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
 				${u[4]}
 			</td>
 			<td class="px-6 py-2">
-				<button onclick=displayEditUtilisateurModal(${u[0]}) class="px-2 py-1 text-sm text-white bg-blue-500 rounded">
+				<button onclick=displayEditUserModal(${u[0]}) class="px-2 py-1 text-sm text-white bg-blue-500 rounded">
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
 				</button>
 			</td>
 			<td class="px-6 py-2">
-				<button onclick=displayUtilisateurConfirmBox(${u[0]}) class="px-2 py-1 text-sm text-white bg-red-500 rounded">
+				<button onclick=displayUserConfirmBox(${u[0]}) class="px-2 py-1 text-sm text-white bg-red-500 rounded">
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
 				</button>
 			</td>
@@ -32,9 +32,9 @@ const renderUtilisateurs = (utilisateurs) => {
     return html
 }
 
-const renderUtilisateurDetails = (utilisateur) => {
+const renderUserDetails = (user) => {
     return `
-        <p class="my-3 font-bold text-xl">${utilisateur.username}</p>
+        <p class="my-3 font-bold text-xl">${user.username}</p>
         <table class="w-full">
             <tr class="w-full">
                 <td class="p-0">
@@ -44,8 +44,8 @@ const renderUtilisateurDetails = (utilisateur) => {
                     Employee
                 </td>
                 <td class="w-3/5 font-bold text-l">
-                    <a onclick=displayEmployeeDetailModal(${utilisateur.employee_id}) class="cursor-pointer border-b-2 border-blue-600 active:outline-none ">
-                        ${utilisateur.full_name}
+                    <a onclick=displayEmployeeDetailModal(${user.employee_id}) class="cursor-pointer border-b-2 border-blue-600 active:outline-none ">
+                        ${user.full_name}
                     </a>
                 </td>
             </tr>
@@ -56,25 +56,25 @@ const renderUtilisateurDetails = (utilisateur) => {
                 <td class="w-2/5">
                     Role
                 </td>
-                <td class="w-3/5 font-bold text-l">${utilisateur.role}</td>
+                <td class="w-3/5 font-bold text-l">${user.role}</td>
             </tr>
         </table>
         <div class="py-2 mt-4 flex justify-end">
-            <button onclick=displayEditUtilisateurModal(${utilisateur.id}) class="w-1/3 mr-4 flex justify-center px-2 py-1 text-sm text-white bg-blue-500 rounded">
+            <button onclick=displayEditUserModal(${user.id}) class="w-1/3 mr-4 flex justify-center px-2 py-1 text-sm text-white bg-blue-500 rounded">
                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                 Modifier
             </button>
-            <button onclick=displayUtilisateurConfirmBox(${utilisateur.id}) class="w-2/3 flex justify-center px-2 py-1 text-sm text-white bg-red-500 rounded">
+            <button onclick=displayUserConfirmBox(${user.id}) class="w-2/3 flex justify-center px-2 py-1 text-sm text-white bg-red-500 rounded">
                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                 Supprimer
             </button>
         </div>
-        <a onclick=showChangePasswordForm(${utilisateur.id}) class="w-full mr-4 flex justify-end px-2 py-1 text-sm text-blue-800 rounded cursor-pointer">
+        <a onclick=showChangePasswordForm(${user.id}) class="w-full mr-4 flex justify-end px-2 py-1 text-sm text-blue-800 rounded cursor-pointer">
             Changer Password
         </a>`
 }
 
-const renderUtilisateurEmployeeOptions = (employees) => {
+const renderUserEmployeeOptions = (employees) => {
     let html = `
     <select class="w-full" id="employee_id" name="employee_id">
         <option class="" value="">Employees</option>`
@@ -86,7 +86,7 @@ const renderUtilisateurEmployeeOptions = (employees) => {
     return html
 }
 
-const renderUtilisateurRoleOptions = (roles) => {
+const renderUserRoleOptions = (roles) => {
     let html = `
     <select class="w-full" id="role_id" name="role_id">
         <option class="" value="">Roles</option>`
@@ -98,50 +98,50 @@ const renderUtilisateurRoleOptions = (roles) => {
     return html
 }
 
-const getAllUtilisateurs = async() => {
-    return await request('admin/getAllUtilisateurs')
+const getAllUsers = async() => {
+    return await request('user/getAllUsers')
 }
 
-const addUtilisateurModal = async() => {
+const addUserModal = async() => {
     const employee_res = await getAllEmployees()
     const role_res = await getAllRoles()
 
-    document.getElementById('employee-options').innerHTML = renderUtilisateurEmployeeOptions(employee_res.employees)
-    document.getElementById('role-options').innerHTML = renderUtilisateurRoleOptions(role_res.roles)
-    document.getElementById('add-utilisateur').style.display = 'flex'
+    document.getElementById('employee-options').innerHTML = renderUserEmployeeOptions(employee_res.employees)
+    document.getElementById('role-options').innerHTML = renderUserRoleOptions(role_res.roles)
+    document.getElementById('add-user').style.display = 'flex'
 }
 
-const displayUtilisateurDetailModal = async(id) => {
-    const url = 'admin/getUtilisateursBy?by=id&keyword=' + id
+const displayUserDetailModal = async(id) => {
+    const url = 'user/getUsersBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
 
     if (res.ok) {
-        const html = renderUtilisateurDetails(res.utilisateurs)
-        document.getElementById('utilisateur-details-div').innerHTML = html
+        const html = renderUserDetails(res.users)
+        document.getElementById('user-details-div').innerHTML = html
     }
-    document.getElementById('utilisateur-details').style.display = 'flex'
+    document.getElementById('user-details').style.display = 'flex'
 }
 
-const displayEditUtilisateurModal = async(id) => {
+const displayEditUserModal = async(id) => {
     const employee_res = await getAllEmployees()
     const role_res = await getAllRoles()
 
-    document.getElementById('edit-employee-options').innerHTML = renderUtilisateurEmployeeOptions(employee_res.employees)
-    document.getElementById('edit-role-options').innerHTML = renderUtilisateurRoleOptions(role_res.roles)
+    document.getElementById('edit-employee-options').innerHTML = renderUserEmployeeOptions(employee_res.employees)
+    document.getElementById('edit-role-options').innerHTML = renderUserRoleOptions(role_res.roles)
 
-    const url = 'admin/getUtilisateursBy?by=id&keyword=' + id
+    const url = 'user/getUsersBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
 
     if (res.ok) {
-        const form = document.getElementById('edit-utilisateur-form')
+        const form = document.getElementById('edit-user-form')
         for (var i = 0; i < form.length - 1; i++) {
-            form[i].value = res.utilisateurs[form[i].name]
+            form[i].value = res.users[form[i].name]
         }
     }
 
-    document.getElementById('edit-utilisateur').style.display = 'flex'
+    document.getElementById('edit-user').style.display = 'flex'
 }
 
 const showChangePasswordForm = (id) => {
@@ -149,25 +149,25 @@ const showChangePasswordForm = (id) => {
     document.getElementById("change-password-div").style.display = 'block'
 }
 
-const displayUtilisateurConfirmBox = async(id) => {
-    const url = 'admin/getUtilisateursBy?by=id&keyword=' + id
+const displayUserConfirmBox = async(id) => {
+    const url = 'user/getUsersBy?by=id&keyword=' + id
     const method = 'GET'
     const res = await request(url, method)
-    document.getElementById('utilisateur-id').value = id
-    document.getElementById('utilisateur-name').innerText = res.utilisateurs.full_name
-    document.getElementById('delete-utilisateur').style.display = 'flex'
+    document.getElementById('user-id').value = id
+    document.getElementById('user-name').innerText = res.users.full_name
+    document.getElementById('delete-user').style.display = 'flex'
 }
 
-const getUtilisateursBy = async() => {
+const getUsersBy = async() => {
     const keyword = document.getElementById('users-search-keyword').value
     const searchBy = document.getElementById('users-by').value
 
-    const url = 'admin/getUtilisateursBy?keyword=' + keyword + '&by=' + searchBy
+    const url = 'user/getUsersBy?keyword=' + keyword + '&by=' + searchBy
     const method = 'GET'
     const res = await request(url, method)
 
     if (res.ok)
-        document.getElementById('utilisateurs-list').innerHTML = renderUtilisateurs(res.utilisateurs)
+        document.getElementById('users-list').innerHTML = renderUsers(res.users)
     else {
         document.getElementById('error-container').style.display = 'block'
         setAlertMessage('error-title', 'Error')
@@ -175,10 +175,10 @@ const getUtilisateursBy = async() => {
     }
 }
 
-const submitAddUtilisateur = async(event) => {
+const submitAddUser = async(event) => {
     event.preventDefault()
 
-    const form = document.getElementById('add-utilisateur-form')
+    const form = document.getElementById('add-user-form')
 
     const url = form.action
     const method = form.method
@@ -187,10 +187,10 @@ const submitAddUtilisateur = async(event) => {
     const res = await request(url, method, formData)
 
     if (res.ok) {
-        const data = await getAllUtilisateurs()
+        const data = await getAllUsers()
         if (data.ok) {
-            const html = renderUtilisateurs(data.utilisateurs)
-            document.getElementById('utilisateurs-list').innerHTML = html
+            const html = renderUsers(data.users)
+            document.getElementById('users-list').innerHTML = html
             form.reset()
         }
     } else {
@@ -200,10 +200,10 @@ const submitAddUtilisateur = async(event) => {
     }
 }
 
-const submitEditUtilisateur = async(event) => {
+const submitEditUser = async(event) => {
     event.preventDefault()
 
-    const form = document.getElementById('edit-utilisateur-form')
+    const form = document.getElementById('edit-user-form')
 
     const url = form.action
     const method = form.method
@@ -212,12 +212,12 @@ const submitEditUtilisateur = async(event) => {
     const res = await request(url, method, formData)
 
     if (res.ok) {
-        const data = await getAllUtilisateurs()
+        const data = await getAllUsers()
         if (data.ok) {
-            const html = renderUtilisateurs(data.utilisateurs)
-            document.getElementById('utilisateurs-list').innerHTML = html
+            const html = renderUsers(data.users)
+            document.getElementById('users-list').innerHTML = html
             form.reset()
-            closeModal('edit-utilisateur')
+            closeModal('edit-user')
         }
     } else {
         document.getElementById('error-container').style.display = 'block'
@@ -248,11 +248,11 @@ const submitChangePassword = async(event) => {
 
 }
 
-const addUtilisateurForm = document.getElementById('add-utilisateur-form')
-addUtilisateurForm && (addUtilisateurForm.onsubmit = submitAddUtilisateur)
+const addUserForm = document.getElementById('add-user-form')
+addUserForm && (addUserForm.onsubmit = submitAddUser)
 
-const editUtilisateurForm = document.getElementById('edit-utilisateur-form')
-editUtilisateurForm && (editUtilisateurForm.onsubmit = submitEditUtilisateur)
+const editUserForm = document.getElementById('edit-user-form')
+editUserForm && (editUserForm.onsubmit = submitEditUser)
 
 const changePasswordForm = document.getElementById('change-password-form')
 changePasswordForm && (changePasswordForm.onsubmit = submitChangePassword)

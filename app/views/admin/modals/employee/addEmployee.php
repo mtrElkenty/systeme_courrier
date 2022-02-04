@@ -49,7 +49,7 @@
       </h3>
       <form
         id="add-employee-form"
-        action="admin/addEmployee"
+        action="employee/addEmployee"
         method="POST"
         class="px-6
           pt-6

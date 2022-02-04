@@ -3,7 +3,7 @@
 /**
  * EMployee Model Class
  */
-class Employee extends Model
+class EmployeeModel extends Model
 {
 	protected $id;
 	protected $full_name;

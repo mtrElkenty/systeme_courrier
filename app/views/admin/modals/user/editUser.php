@@ -1,10 +1,10 @@
-<div class="min-w-screen h-screen hidden animated fadeIn faster fixed left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover" id="edit-utilisateur">
-    <div onclick="closeModal('edit-utilisateur')" class="absolute bg-black opacity-80 inset-0 z-0"></div>
+<div class="min-w-screen h-screen hidden animated fadeIn faster fixed left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover" id="edit-user">
+    <div onclick="closeModal('edit-user')" class="absolute bg-black opacity-80 inset-0 z-0"></div>
     <div class="w-full max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white">
         <div class="w-full bg-white rounded-lg lg:rounded-l-none">
             <h3 class="text-3xl text-center">Modifier Utilisateur!</h3>
-            <form id="edit-utilisateur-form" action="admin/editUtilisateur" method="POST" class="px-6 pt-6 pb-8 mb-4 bg-white rounded">
-				<input id="utilisateur-id" type="hidden" name="id" />
+            <form id="edit-user-form" action="user/editUser" method="POST" class="px-6 pt-6 pb-8 mb-4 bg-white rounded">
+				<input id="user-id" type="hidden" name="id" />
                 <div class="mb-4">
                     <label class="block mb-2 text-sm font-bold text-gray-800" for="email">Selectionnez Employee</label>
                     <div id="edit-employee-options"></div>
