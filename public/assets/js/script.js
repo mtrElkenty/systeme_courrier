@@ -45,7 +45,13 @@ const submitLoginForm = async() => {
 
     if (res.ok) {
         sessionStorage.setItem('user', JSON.stringify(res.user[0]))
-        window.location.replace('home')
+            // window.location.replace('home') 
+        let redirect = ""
+        if (res.user[0].role_id == 3) redirect += 'home'
+        if (res.user[0].role_id == 2) redirect += 'admin'
+        if (res.user[0].role_id == 1) redirect += 'admin'
+
+        window.location.replace(redirect)
     } else {
         setAlertMessage('error-text', res.error)
         const alerts = document.getElementById('alerts')
@@ -56,7 +62,6 @@ const submitLoginForm = async() => {
             alerts.style.right = `${i}px`
             await sleep(1)
         }
-        console.log(i);
     }
 }
 

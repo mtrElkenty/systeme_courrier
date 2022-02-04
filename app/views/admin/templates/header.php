@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (isset($_SESSION['user']) && strpos($_SESSION['user'], '"role_id":1') == false) { 
+if (isset($_SESSION['user']) && strpos($_SESSION['user'], '"role_id":3')) { 
     header('Location: home');
     exit();
 } if (!isset($_SESSION['user']) && strpos($_SERVER['REQUEST_URI'], 'login') == false) {
