@@ -1,7 +1,8 @@
 const renderEmployees = (employees) => {
-    let html = ''
-    employees.map(
-        e => html += `<tr class="whitespace-nowrap cursor-pointer hover:bg-blue-300">
+	let html = ''
+	employees.map(
+		(e) =>
+			(html += `<tr class="whitespace-nowrap cursor-pointer hover:bg-blue-300">
 			<td onclick=displayEmployeeDetailModal(${e[0]}) class="px-6 py-2 text-sm text-gray-900">
 				${e[0]}
 			</td>
@@ -30,13 +31,13 @@ const renderEmployees = (employees) => {
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
 				</button>
 			</td>
-		</tr>`
-    )
-    return html
+		</tr>`)
+	)
+	return html
 }
 
 const renderEmployeeDetails = (employee) => {
-    return `
+	return `
             <p class="my-3 font-bold text-xl flex">
                 <svg class="w-6 h-6 mt-1 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 ${employee.full_name}
@@ -83,116 +84,117 @@ const renderEmployeeDetails = (employee) => {
             </div>`
 }
 
-const getAllEmployees = async() => {
-    return await request('employee/getAllEmployees')
+const getAllEmployees = async () => {
+	return await request('employee/getAllEmployees')
 }
 
-const displayEmployeeDetailModal = async(id) => {
-    const url = 'employee/getEmployeesBy?by=id&keyword=' + id
-    const method = 'GET'
-    const res = await request(url, method)
+const displayEmployeeDetailModal = async (id) => {
+	const url = 'employee/getEmployeesBy?by=id&keyword=' + id
+	const method = 'GET'
+	const res = await request(url, method)
 
-    if (res.ok) {
-        const html = renderEmployeeDetails(res.employees)
-        document.getElementById('employee-details-div').innerHTML = html
-        document.getElementById('employee-details').style.display = 'flex'
-    } else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok) {
+		const html = renderEmployeeDetails(res.employees)
+		document.getElementById('employee-details-div').innerHTML = html
+		document.getElementById('employee-details').style.display = 'flex'
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
-const displayEditEmployeeModal = async(id) => {
-    const url = 'employee/getEmployeesBy?by=id&keyword=' + id
-    const method = 'GET'
-    const res = await request(url, method)
+const displayEditEmployeeModal = async (id) => {
+	const url = 'employee/getEmployeesBy?by=id&keyword=' + id
+	const method = 'GET'
+	const res = await request(url, method)
 
-    if (res.ok) {
-        const form = document.getElementById('edit-employee-form')
-        for (var i = 0; i < form.length - 1; i++) {
-            form[i].value = res.employees[form[i].name]
-        }
-        document.getElementById('edit-employee').style.display = 'flex'
-    } else {
-        setErrorAlert(res.error)
-    }
-
+	if (res.ok) {
+		const form = document.getElementById('edit-employee-form')
+		for (var i = 0; i < form.length - 1; i++) {
+			form[i].value = res.employees[form[i].name]
+		}
+		document.getElementById('edit-employee').style.display = 'flex'
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
-const displayEmployeeConfirmBox = async(id) => {
-    const url = 'employee/getEmployeesBy?by=id&keyword=' + id
-    const method = 'GET'
-    const res = await request(url, method)
-    document.getElementById('employee-id').value = id
-    document.getElementById('employee-name').innerText = res.employees.full_name
-    document.getElementById('delete-employee').style.display = 'flex'
+const displayEmployeeConfirmBox = async (id) => {
+	const url = 'employee/getEmployeesBy?by=id&keyword=' + id
+	const method = 'GET'
+	const res = await request(url, method)
+	document.getElementById('employee-id').value = id
+	document.getElementById('employee-name').innerText = res.employees.full_name
+	document.getElementById('delete-employee').style.display = 'flex'
 }
 
-const getEmployeesBy = async() => {
-    const keyword = document.getElementById('search-keyword').value
-    const searchBy = document.getElementById('by').value
+const getEmployeesBy = async () => {
+	const keyword = document.getElementById('search-keyword').value
+	const searchBy = document.getElementById('by').value
 
-    const url = 'employee/getEmployeesBy?keyword=' + keyword + '&by=' + searchBy
-    const method = 'GET'
-    const res = await request(url, method)
+	const url = 'employee/getEmployeesBy?keyword=' + keyword + '&by=' + searchBy
+	const method = 'GET'
+	const res = await request(url, method)
 
-    if (res.ok) {
-        setSuccessAlert(res.message)
-    } else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok) {
+		document.getElementById('employees-list').innerHTML = renderUsers(
+			res.employees
+		)
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
 const addEmployeeModal = () => {
-    document.getElementById('add-employee').style.display = 'flex'
+	document.getElementById('add-employee').style.display = 'flex'
 }
 
-const submitAddEmployee = async(event) => {
-    event.preventDefault()
+const submitAddEmployee = async (event) => {
+	event.preventDefault()
 
-    const form = document.getElementById('add-employee-form')
+	const form = document.getElementById('add-employee-form')
 
-    const url = form.action
-    const method = form.method
-    const formData = new FormData(form)
+	const url = form.action
+	const method = form.method
+	const formData = new FormData(form)
 
-    const res = await request(url, method, formData)
+	const res = await request(url, method, formData)
 
-    if (res.ok) {
-        const data = await getAllEmployees()
-        if (data.ok) {
-            const html = renderEmployees(data.employees)
-            document.getElementById('employees-list').innerHTML = html
-            form.reset();
-        }
-        setSuccessAlert(res.message)
-    } else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok) {
+		const data = await getAllEmployees()
+		if (data.ok) {
+			const html = renderEmployees(data.employees)
+			document.getElementById('employees-list').innerHTML = html
+			form.reset()
+		}
+		setSuccessAlert(res.message)
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
-const submitEditEmployee = async(event) => {
-    event.preventDefault()
+const submitEditEmployee = async (event) => {
+	event.preventDefault()
 
-    const form = document.getElementById('edit-employee-form')
+	const form = document.getElementById('edit-employee-form')
 
-    const url = form.action
-    const method = form.method
-    const formData = new FormData(form)
+	const url = form.action
+	const method = form.method
+	const formData = new FormData(form)
 
-    const res = await request(url, method, formData)
+	const res = await request(url, method, formData)
 
-    if (res.ok) {
-        const data = await getAllEmployees()
-        if (data.ok) {
-            const html = renderEmployees(data.employees)
-            document.getElementById('employees-list').innerHTML = html
-            form.reset();
-            closeModal('edit-employee')
-        }
-        setSuccessAlert(res.message)
-    } else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok) {
+		const data = await getAllEmployees()
+		if (data.ok) {
+			const html = renderEmployees(data.employees)
+			document.getElementById('employees-list').innerHTML = html
+			form.reset()
+			closeModal('edit-employee')
+		}
+		setSuccessAlert(res.message)
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
 const addEmployeeForm = document.getElementById('add-employee-form')

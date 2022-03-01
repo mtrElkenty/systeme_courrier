@@ -1,7 +1,8 @@
 function renderCourriers(courriers) {
-    let html = ''
-    courriers.map(
-        c => html += `<tr class="whitespace-nowrap cursor-pointer hover:bg-blue-300">
+	let html = ''
+	courriers.map(
+		(c) =>
+			(html += `<tr class="whitespace-nowrap cursor-pointer hover:bg-blue-300">
 			<td onclick=displayCourrierDetailModal(${c[0]}) class="px-6 py-2 text-sm text-gray-900">
 				${c[0]}
 			</td>
@@ -36,13 +37,13 @@ function renderCourriers(courriers) {
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
 				</button>
 			</td>
-		</tr>`
-    )
-    return html
+		</tr>`)
+	)
+	return html
 }
 
 const renderCourrierDetails = (courrier) => {
-    return `
+	return `
             <p class="my-3 font-bold text-xl flex">
                 <svg class="w-6 h-6 mt-1 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
                 ${courrier.numero_inscription}
@@ -118,119 +119,117 @@ const renderCourrierDetails = (courrier) => {
             </div>`
 }
 
-const getAllCourriers = async() => {
-    return await request('courrier/getAllCourriers')
+const getAllCourriers = async () => {
+	return await request('courrier/getAllCourriers')
 }
 
-const displayCourrierDetailModal = async(id) => {
-    const url = 'courrier/getCourriersBy?by=id&keyword=' + id
-    const method = 'GET'
-    const res = await request(url, method)
-    if (res.ok) {
-        const html = renderCourrierDetails(res.courriers)
-        document.getElementById('courrier-details-div').innerHTML = html
-        document.getElementById('courrier-details').style.display = 'flex'
-    } else {
-        setErrorAlert(res.error)
-    }
+const displayCourrierDetailModal = async (id) => {
+	const url = 'courrier/getCourriersBy?by=id&keyword=' + id
+	const method = 'GET'
+	const res = await request(url, method)
+	if (res.ok) {
+		const html = renderCourrierDetails(res.courriers)
+		document.getElementById('courrier-details-div').innerHTML = html
+		document.getElementById('courrier-details').style.display = 'flex'
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
-const displayEditCourrierModal = async(id) => {
-    const url = 'courrier/getCourriersBy?by=id&keyword=' + id
-    const method = 'GET'
-    const res = await request(url, method)
+const displayEditCourrierModal = async (id) => {
+	const url = 'courrier/getCourriersBy?by=id&keyword=' + id
+	const method = 'GET'
+	const res = await request(url, method)
 
-    if (res.ok) {
-        const form = document.getElementById('edit-courrier-form')
-        for (var i = 0; i < form.length - 1; i++) {
-            form[i].value = res.courriers[form[i].name]
-        }
-        document.getElementById('edit-courrier').style.display = 'flex'
-    } else {
-        setErrorAlert(res.error)
-    }
-
+	if (res.ok) {
+		const form = document.getElementById('edit-courrier-form')
+		for (var i = 0; i < form.length - 1; i++) {
+			form[i].value = res.courriers[form[i].name]
+		}
+		document.getElementById('edit-courrier').style.display = 'flex'
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
-const courrierPrint = async(id = "") => {
-    const url = 'courrier/getCourriersBy?by=id&keyword=' + id
-    const method = 'GET'
-    const res = await request(url, method)
-    console.log(res)
-    if (res.ok) {
-        createAndPrintTable(res.courriers)
-    } else {
-        setErrorAlert(res.error)
-    }
+const courrierPrint = async (id = '') => {
+	const url = 'courrier/getCourriersBy?by=id&keyword=' + id
+	const method = 'GET'
+	const res = await request(url, method)
+	console.log(res)
+	if (res.ok) {
+		createAndPrintTable(res.courriers)
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
-const getCourriersBy = async() => {
-    const keyword = document.getElementById('courrier-search-keyword').value
-    const searchBy = document.getElementById('courrier-by').value
+const getCourriersBy = async () => {
+	const keyword = document.getElementById('courrier-search-keyword').value
+	const searchBy = document.getElementById('courrier-by').value
 
-    const url = 'courrier/getCourriersBy?keyword=' + keyword + '&by=' + searchBy
-    const method = 'GET'
-    const res = await request(url, method)
+	const url = 'courrier/getCourriersBy?keyword=' + keyword + '&by=' + searchBy
+	const method = 'GET'
+	const res = await request(url, method)
 
-    if (res.ok)
-        document.getElementById('courriers-list').innerHTML = renderCourriers(res.courriers)
-    else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok)
+		document.getElementById('courriers-list').innerHTML = renderCourriers(
+			res.courriers
+		)
 }
 
 const addCourrierModal = () => {
-    document.getElementById('add-courrier').style.display = 'flex'
+	document.getElementById('add-courrier').style.display = 'flex'
 }
 
-const submitAddCourrier = async(event) => {
-    event.preventDefault()
+const submitAddCourrier = async (event) => {
+	event.preventDefault()
 
-    const form = document.getElementById('add-courrier-form')
+	const form = document.getElementById('add-courrier-form')
 
-    const url = form.action
-    const method = form.method
-    const formData = new FormData(form)
+	const url = form.action
+	const method = form.method
+	const formData = new FormData(form)
 
-    const res = await request(url, method, formData)
+	const res = await request(url, method, formData)
 
-    if (res.ok) {
-        const data = await getAllCourriers()
-        if (data.ok) {
-            const html = renderCourriers(data.courriers)
-            document.getElementById('courriers-list').innerHTML = html
-            form.reset();
-            courrierPrint()
-        }
-        setSuccessAlert(res.message)
-    } else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok) {
+		const data = await getAllCourriers()
+		if (data.ok) {
+			const html = renderCourriers(data.courriers)
+			document.getElementById('courriers-list').innerHTML = html
+			form.reset()
+			courrierPrint()
+		}
+		setSuccessAlert(res.message)
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
-const submitEditCourrier = async(event) => {
-    event.preventDefault()
+const submitEditCourrier = async (event) => {
+	event.preventDefault()
 
-    const form = document.getElementById('edit-courrier-form')
+	const form = document.getElementById('edit-courrier-form')
 
-    const url = form.action
-    const method = form.method
-    const formData = new FormData(form)
+	const url = form.action
+	const method = form.method
+	const formData = new FormData(form)
 
-    const res = await request(url, method, formData)
+	const res = await request(url, method, formData)
 
-    if (res.ok) {
-        const data = await getAllCourriers()
-        if (data.ok) {
-            const html = renderCourriers(data.courriers)
-            document.getElementById('courriers-list').innerHTML = html
-            form.reset();
-            closeModal('edit-courrier')
-        }
-        setSuccessAlert(res.message)
-    } else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok) {
+		const data = await getAllCourriers()
+		if (data.ok) {
+			const html = renderCourriers(data.courriers)
+			document.getElementById('courriers-list').innerHTML = html
+			form.reset()
+			closeModal('edit-courrier')
+		}
+		setSuccessAlert(res.message)
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
 const addCourrierForm = document.getElementById('add-courrier-form')

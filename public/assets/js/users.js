@@ -1,7 +1,8 @@
 const renderUsers = (users) => {
-    let html = ''
-    users.map(
-        u => html += `<tr class="whitespace-nowrap cursor-pointer hover:bg-blue-300">
+	let html = ''
+	users.map(
+		(u) =>
+			(html += `<tr class="whitespace-nowrap cursor-pointer hover:bg-blue-300">
 			<td onclick=displayUserDetailModal(${u[0]}) class="px-6 py-2 text-sm text-gray-900">
 				${u[0]}
 			</td>
@@ -27,13 +28,13 @@ const renderUsers = (users) => {
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
 				</button>
 			</td>
-		</tr>`
-    )
-    return html
+		</tr>`)
+	)
+	return html
 }
 
 const renderUserDetails = (user) => {
-    return `
+	return `
         <p class="my-3 font-bold text-xl">${user.username}</p>
         <table class="w-full">
             <tr class="w-full">
@@ -75,176 +76,183 @@ const renderUserDetails = (user) => {
 }
 
 const renderUserEmployeeOptions = (employees) => {
-    let html = `
+	let html = `
     <select class="w-full" id="employee_id" name="employee_id">
         <option class="" value="">Employees</option>`
-    employees.map(e => html += `
+	employees.map(
+		(e) =>
+			(html += `
         <option class="" value="${e[0]}">${e[1]}</option>
     `)
-    html += `</select>`
+	)
+	html += `</select>`
 
-    return html
+	return html
 }
 
 const renderUserRoleOptions = (roles) => {
-    let html = `
+	let html = `
     <select class="w-full" id="role_id" name="role_id">
         <option class="" value="">Roles</option>`
-    roles.map(r => html += `
+	roles.map(
+		(r) =>
+			(html += `
         <option class="" value="${r[0]}">${r[1]}</option>
     `)
-    html += `</select>`
+	)
+	html += `</select>`
 
-    return html
+	return html
 }
 
-const getAllUsers = async() => {
-    return await request('user/getAllUsers')
+const getAllUsers = async () => {
+	return await request('user/getAllUsers')
 }
 
-const addUserModal = async() => {
-    const employee_res = await getAllEmployees()
-    const role_res = await getAllRoles()
+const addUserModal = async () => {
+	const employee_res = await getAllEmployees()
+	const role_res = await getAllRoles()
 
-    document.getElementById('employee-options').innerHTML = renderUserEmployeeOptions(employee_res.employees)
-    document.getElementById('role-options').innerHTML = renderUserRoleOptions(role_res.roles)
-    document.getElementById('add-user').style.display = 'flex'
+	document.getElementById('employee-options').innerHTML =
+		renderUserEmployeeOptions(employee_res.employees)
+	document.getElementById('role-options').innerHTML = renderUserRoleOptions(
+		role_res.roles
+	)
+	document.getElementById('add-user').style.display = 'flex'
 }
 
-const displayUserDetailModal = async(id) => {
-    const url = 'user/getUsersBy?by=id&keyword=' + id
-    const method = 'GET'
-    const res = await request(url, method)
+const displayUserDetailModal = async (id) => {
+	const url = 'user/getUsersBy?by=id&keyword=' + id
+	const method = 'GET'
+	const res = await request(url, method)
 
-    if (res.ok) {
-        const html = renderUserDetails(res.users)
-        document.getElementById('user-details-div').innerHTML = html
-        document.getElementById('user-details').style.display = 'flex'
-    } else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok) {
+		const html = renderUserDetails(res.users)
+		document.getElementById('user-details-div').innerHTML = html
+		document.getElementById('user-details').style.display = 'flex'
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
-const displayEditUserModal = async(id) => {
-    const employee_res = await getAllEmployees()
-    const role_res = await getAllRoles()
+const displayEditUserModal = async (id) => {
+	const employee_res = await getAllEmployees()
+	const role_res = await getAllRoles()
 
-    document.getElementById('edit-employee-options').innerHTML = renderUserEmployeeOptions(employee_res.employees)
-    document.getElementById('edit-role-options').innerHTML = renderUserRoleOptions(role_res.roles)
+	document.getElementById('edit-employee-options').innerHTML =
+		renderUserEmployeeOptions(employee_res.employees)
+	document.getElementById('edit-role-options').innerHTML =
+		renderUserRoleOptions(role_res.roles)
 
-    const url = 'user/getUsersBy?by=id&keyword=' + id
-    const method = 'GET'
-    const res = await request(url, method)
+	const url = 'user/getUsersBy?by=id&keyword=' + id
+	const method = 'GET'
+	const res = await request(url, method)
 
-    if (res.ok) {
-        const form = document.getElementById('edit-user-form')
-        for (var i = 0; i < form.length - 1; i++) {
-            form[i].value = res.users[form[i].name]
-        }
-        document.getElementById('edit-user').style.display = 'flex'
-        setSuccessAlert(res.message)
-    } else {
-        setErrorAlert(res.error)
-    }
-
+	if (res.ok) {
+		const form = document.getElementById('edit-user-form')
+		for (var i = 0; i < form.length - 1; i++) {
+			form[i].value = res.users[form[i].name]
+		}
+		document.getElementById('edit-user').style.display = 'flex'
+		setSuccessAlert(res.message)
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
 const showChangePasswordForm = (id) => {
-    document.getElementById("change-pass-user-id").value = id
-    document.getElementById("change-password-div").style.display = 'block'
+	document.getElementById('change-pass-user-id').value = id
+	document.getElementById('change-password-div').style.display = 'block'
 }
 
-const displayUserConfirmBox = async(id) => {
-    const url = 'user/getUsersBy?by=id&keyword=' + id
-    const method = 'GET'
-    const res = await request(url, method)
-    document.getElementById('user-id').value = id
-    document.getElementById('user-name').innerText = res.users.full_name
-    document.getElementById('delete-user').style.display = 'flex'
+const displayUserConfirmBox = async (id) => {
+	const url = 'user/getUsersBy?by=id&keyword=' + id
+	const method = 'GET'
+	const res = await request(url, method)
+	document.getElementById('user-id').value = id
+	document.getElementById('user-name').innerText = res.users.full_name
+	document.getElementById('delete-user').style.display = 'flex'
 }
 
-const getUsersBy = async() => {
-    const keyword = document.getElementById('users-search-keyword').value
-    const searchBy = document.getElementById('users-by').value
+const getUsersBy = async () => {
+	const keyword = document.getElementById('users-search-keyword').value
+	const searchBy = document.getElementById('users-by').value
 
-    const url = 'user/getUsersBy?keyword=' + keyword + '&by=' + searchBy
-    const method = 'GET'
-    const res = await request(url, method)
+	const url = 'user/getUsersBy?keyword=' + keyword + '&by=' + searchBy
+	const method = 'GET'
+	const res = await request(url, method)
 
-    if (res.ok) {
-        document.getElementById('users-list').innerHTML = renderUsers(res.users)
-    } else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok) {
+		document.getElementById('users-list').innerHTML = renderUsers(res.users)
+	}
 }
 
-const submitAddUser = async(event) => {
-    event.preventDefault()
+const submitAddUser = async (event) => {
+	event.preventDefault()
 
-    const form = document.getElementById('add-user-form')
+	const form = document.getElementById('add-user-form')
 
-    const url = form.action
-    const method = form.method
-    const formData = new FormData(form)
+	const url = form.action
+	const method = form.method
+	const formData = new FormData(form)
 
-    const res = await request(url, method, formData)
+	const res = await request(url, method, formData)
 
-    if (res.ok) {
-        const data = await getAllUsers()
-        if (data.ok) {
-            const html = renderUsers(data.users)
-            document.getElementById('users-list').innerHTML = html
-            form.reset()
-        }
-        setSuccessAlert(res.message)
-    } else {
-        setErrorAlert(res.message)
-    }
+	if (res.ok) {
+		const data = await getAllUsers()
+		if (data.ok) {
+			const html = renderUsers(data.users)
+			document.getElementById('users-list').innerHTML = html
+			form.reset()
+		}
+		setSuccessAlert(res.message)
+	} else {
+		setErrorAlert(res.message)
+	}
 }
 
-const submitEditUser = async(event) => {
-    event.preventDefault()
+const submitEditUser = async (event) => {
+	event.preventDefault()
 
-    const form = document.getElementById('edit-user-form')
+	const form = document.getElementById('edit-user-form')
 
-    const url = form.action
-    const method = form.method
-    const formData = new FormData(form)
+	const url = form.action
+	const method = form.method
+	const formData = new FormData(form)
 
-    const res = await request(url, method, formData)
+	const res = await request(url, method, formData)
 
-    if (res.ok) {
-        const data = await getAllUsers()
-        if (data.ok) {
-            const html = renderUsers(data.users)
-            document.getElementById('users-list').innerHTML = html
-            form.reset()
-            closeModal('edit-user')
-        }
-    } else {
-        setErrorAlert(res.error)
-    }
+	if (res.ok) {
+		const data = await getAllUsers()
+		if (data.ok) {
+			const html = renderUsers(data.users)
+			document.getElementById('users-list').innerHTML = html
+			form.reset()
+			closeModal('edit-user')
+		}
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
-const submitChangePassword = async(event) => {
-    event.preventDefault()
+const submitChangePassword = async (event) => {
+	event.preventDefault()
 
-    const form = document.getElementById('change-password-form')
+	const form = document.getElementById('change-password-form')
 
-    const url = form.action
-    const method = form.method
-    const formData = new FormData(form)
+	const url = form.action
+	const method = form.method
+	const formData = new FormData(form)
 
-    const res = await request(url, method, formData)
+	const res = await request(url, method, formData)
 
-    if (res.ok) {
-        setAlertMessage('success-text', res.message)
-        const alerts = document.getElementById('alerts')
-        setSuccessAlert(res.message)
-    } else {
-        setErrorAlert(res.error)
-    }
-
+	if (res.ok) {
+		setAlertMessage('success-text', res.message)
+		const alerts = document.getElementById('alerts')
+		setSuccessAlert(res.message)
+	} else {
+		setErrorAlert(res.error)
+	}
 }
 
 const addUserForm = document.getElementById('add-user-form')
